@@ -60,7 +60,7 @@ int main()
 	cout << crosquare_main({ 0.5, 0.5 }, 45) << endl;
 	/*cout << "mainDot.x: " << mainDot.x << "   " << "mainDot.y: " << mainDot.y << endl
 		<< "angle: = "*/
-	setShift(Shift, mainDot, angle, len);
+	setShift(Shift, mainDot, angle, int(len) + 1);
 	for (int i = 0; i < int(len) + 1; i++)
 	{
 		cout << Shift[i][0].x << ' ' << Shift[i][0].y << endl;
