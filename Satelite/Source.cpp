@@ -4,6 +4,7 @@
 #include "cmath"
 #include "clocale"
 #include "iomanip"
+#include "fstream"
 
 using namespace std;
 
@@ -16,6 +17,36 @@ void matrixOutput(int N, double** A)
 			cout << left << setw(8) << A[j][i];
 	}
 	cout << endl;
+}
+
+void matrixOutputPHP(int N, double** A)
+{
+	ofstream phpOut;
+	phpOut.open("C:\\Users\\Fedor\\Desktop\\visual.html");
+	phpOut << "<!DOCTYPE html>\n"
+		<< "<html lang=\"en\">\n"
+		<< "<head>\n"
+		<< "	<meta charset=\"UTF-8\">\n"
+		<< "	<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+		<< "	<title>Document</title>\n"
+		<< "</head>\n"
+		<< "<body>\n"
+		<< "	<table border=\"0\">\n";
+	for (int i = N - 1; i >= 0; i--)
+	{
+		phpOut << "		<tr>\n";
+		for (int j = 0; j < N; j++)
+		{
+			phpOut << "			<td style=\"background-color: rgb(" << 255 - 255 * A[j][i] << ", " << 255 - 255 * A[j][i] << ", " << 255 - 255 * A[j][i] << "); \">\n"
+				<< "				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n"
+				<< "			</td>";
+		}
+		phpOut << "		</tr>";
+	}
+	phpOut << "	</table>\n"
+		<< "</body>\n"
+		<< "<html>";
+	phpOut.close();
 }
 
 void setShiftDots(dot** Shift, dot mainDot, double angle, int len)
@@ -38,14 +69,15 @@ void setShift(dot* Shift, dot mainDot, double angle, int len)
 	}
 }
 
-void modelToMatrix(double** Matrix, dot* Shift, int len, double angle )
+void modelToMatrix(double** Matrix, dot* Shift, double len, double angle )
 {
-	for (int i = 0; i < len; i++)
+	int matrixLen = int(len) + 1;
+	for (int i = 0; i < matrixLen; i++)
 		for (int y = int(Shift[i].y + 0.5) - 1; y <= int(Shift[i].y + 0.5) + 1; y++)
 			for (int x = int(Shift[i].x + 0.5) - 1; x <= int(Shift[i].x + 0.5) + 1; x++)
 			{
 				double sqr = crosquare_main({ Shift[i].x + 0.5 - x, Shift[i].y + 0.5 - y }, angle);
-				Matrix[x][y] += sqr;
+				Matrix[x][y] += sqr / len;
 			}
 }
 
@@ -90,9 +122,9 @@ int main()
 	setShift(Shift, mainDot, angle, int(len) + 1);
 	/*for (int i = 0; i < int(len) + 1; i++)
 		cout << Shift[i].x << ' ' << Shift[i].y << endl;*/
-	modelToMatrix(Matrix, Shift, int(len) + 1, angle);
+	modelToMatrix(Matrix, Shift, len, angle);
 
-	matrixOutput(matrixLen, Matrix);
+	matrixOutputPHP(matrixLen, Matrix);
 	
 	for (int i = 0; i < int(len) + 1; i++)
 	{
