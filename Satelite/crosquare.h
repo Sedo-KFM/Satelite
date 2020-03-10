@@ -256,15 +256,14 @@ double crosquare_main(dot mainDot, double angle)
 	dot Sqr0[5] = { {0, 0}, {0, 1}, {1, 1}, {1, 0}, {0, 0} }, Sqr1[5];
 	if (angle >= 0 && angle < 90)
 	{
-		cout << "\nS = ";
 		if (angle == 0)
-			cout << crosquare_zoneZeroAngle(mainDot.x, mainDot.y) << endl;
+			return crosquare_zoneZeroAngle(mainDot.x, mainDot.y);
 		else
 		{
 			crosquare_setSqr(Sqr1, mainDot, angle);
 			int tops = crosquare_quantityOfTops(Sqr0, Sqr1);
 			if (tops == 0)
-				cout << 0 << endl;
+				return 0;
 			else
 			{
 				dot* Polygon = new dot[tops + 1];

@@ -9,11 +9,11 @@ using namespace std;
 
 void matrixOutput(int N, double** A)
 {
-	for (int i = 0; i < N; i++)
+	for (int i = N - 1; i >= 0; i--)
 	{
-		for (int j = 0; j < N; j++)
-			cout << left << setw(8) << A[i][j];
 		cout << endl;
+		for (int j = 0; j < N; j++)
+			cout << left << setw(8) << A[j][i];
 	}
 	cout << endl;
 }
@@ -38,11 +38,15 @@ void setShift(dot* Shift, dot mainDot, double angle, int len)
 	}
 }
 
-void modelToMatrix(double** Matrix, dot mainDot, double angle )
+void modelToMatrix(double** Matrix, dot* Shift, int len, double angle )
 {
-	for (int y = int(mainDot.y + 0.5) - 1; y <= int(mainDot.y + 0.5) + 1; y++)
-		for (int x = int(mainDot.x + 0.5) - 1; x <= int(mainDot.x + 0.5) + 1; x++)
-			Matrix[x][y] += crosquare_main({ mainDot.x - x, mainDot.y - y }, angle);
+	for (int i = 0; i < len; i++)
+		for (int y = int(Shift[i].y + 0.5) - 1; y <= int(Shift[i].y + 0.5) + 1; y++)
+			for (int x = int(Shift[i].x + 0.5) - 1; x <= int(Shift[i].x + 0.5) + 1; x++)
+			{
+				double sqr = crosquare_main({ Shift[i].x + 0.5 - x, Shift[i].y + 0.5 - y }, angle);
+				Matrix[x][y] += sqr;
+			}
 }
 
 int main()
@@ -84,10 +88,12 @@ int main()
 		cout << Shift[i][4].x << ' ' << Shift[i][4].y << endl << endl;
 	}*/
 	setShift(Shift, mainDot, angle, int(len) + 1);
-	for (int i = 0; i < int(len) + 1; i++)
-		cout << Shift[i].x << ' ' << Shift[i].y << endl;
+	/*for (int i = 0; i < int(len) + 1; i++)
+		cout << Shift[i].x << ' ' << Shift[i].y << endl;*/
+	modelToMatrix(Matrix, Shift, int(len) + 1, angle);
+
+	matrixOutput(matrixLen, Matrix);
 	
-	//modelToMatrix(Matrix, )
 	for (int i = 0; i < int(len) + 1; i++)
 	{
 		ShiftDots[i] = NULL;
