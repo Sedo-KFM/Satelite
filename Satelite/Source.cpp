@@ -77,7 +77,7 @@ void modelToMatrix(double** Matrix, dot* Shift, double len, double angle )
 			for (int x = int(Shift[i].x + 0.5) - 1; x <= int(Shift[i].x + 0.5) + 1; x++)
 			{
 				double sqr = crosquare_main({ Shift[i].x + 0.5 - x, Shift[i].y + 0.5 - y }, angle);
-				Matrix[x][y] += sqr / len;
+				Matrix[x][y] += sqr / (len + 1);
 			}
 }
 
@@ -90,7 +90,7 @@ int main()
 	cin >> angle;
 	cout << "¬ведите длину смаза\n";
 	cin >> len;
-	matrixLen = int(len * 4);
+	matrixLen = int(len * 4 + 1) + 4;
 	double** Matrix = new double* [matrixLen];
 	for (int i = 0; i < matrixLen; i++)
 		Matrix[i] = new double[matrixLen];

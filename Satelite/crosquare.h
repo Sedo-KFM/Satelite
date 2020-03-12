@@ -263,7 +263,9 @@ double crosquare_main(dot mainDot, double angle)
 			crosquare_setSqr(Sqr1, mainDot, angle);
 			int tops = crosquare_quantityOfTops(Sqr0, Sqr1);
 			if (tops == 0)
+			{
 				return 0;
+			}
 			else
 			{
 				dot* Polygon = new dot[tops + 1];
