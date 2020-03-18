@@ -254,8 +254,8 @@ double crosquare_main(dot mainDot, double angle)
 {
 	setlocale(0, "");
 	dot Sqr0[5] = { {0, 0}, {0, 1}, {1, 1}, {1, 0}, {0, 0} }, Sqr1[5];
-	if (angle >= 0 && angle < 90)
-	{
+//	if (angle >= 0 && angle < 90)
+//	{
 		if (angle == 0)
 			return crosquare_zoneZeroAngle(mainDot.x, mainDot.y);
 		else
@@ -275,9 +275,9 @@ double crosquare_main(dot mainDot, double angle)
 				delete[] Polygon;
 			}
 		}
-	}
-	else
-		cout << "\nНекооректные значения угла\n";
+//	}
+//	else
+//		cout << "\nНекооректные значения угла\n";
 	return 0;
 }
 
