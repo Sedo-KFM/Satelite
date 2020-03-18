@@ -271,8 +271,9 @@ double crosquare_main(dot mainDot, double angle)
 				dot* Polygon = new dot[tops + 1];
 				crosquare_fillPolygon(Sqr0, Sqr1, Polygon);
 				crosquare_lastConvexer(tops, Polygon);
-				return crosquare_zone(Polygon, tops);
+				double toRet = crosquare_zone(Polygon, tops);
 				delete[] Polygon;
+				return toRet;
 			}
 		}
 //	}
