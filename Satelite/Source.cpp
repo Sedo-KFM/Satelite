@@ -7,7 +7,7 @@
 #include "fstream"
 
 using namespace std;
-/*
+
 void matrixOutput(int x, int y, double** A)
 {
 	for (int i = y - 1; i >= 0; i--)
@@ -127,10 +127,9 @@ void setMM(double** Matrix, int mLen, double** MatrixModel, int length, int heig
 	}
 
 }
-*/
 
-//double** main()
-void main()
+//void main()
+double** main()
 {
 	setlocale(0, "");
 	int matrixLen;
