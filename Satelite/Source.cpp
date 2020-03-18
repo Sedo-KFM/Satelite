@@ -8,13 +8,13 @@
 
 using namespace std;
 
-void matrixOutput(int N, double** A)
+void matrixOutput(int x, int y, double** A)
 {
-	for (int i = N - 1; i >= 0; i--)
+	for (int i = y - 1; i >= 0; i--)
 	{
 		cout << endl;
-		for (int j = 0; j < N; j++)
-			cout << left << setw(8) << A[j][i];
+		for (int j = 0; j < x; j++)
+			cout << left << setw(7) << setprecision(2) << A[j][i];
 	}
 	cout << endl;
 }
@@ -81,6 +81,53 @@ void modelToMatrix(double** Matrix, dot* Shift, double len, double angle )
 			}
 }
 
+void setMMSize(double** Matrix, int mLen, int* length, int* heigth, int* xFirst, int* yFirst)
+{
+	bool clear;
+	*length = 0;
+	*heigth = 0;
+	for (int row = mLen - 1; row >= 0; row--)
+	{
+		clear = true;
+		for (int col = mLen - 1; col >= 0; col--)
+		{
+			if (Matrix[col][row] > 0)
+			{
+				clear = false;
+				*yFirst = row;
+			}
+		}
+		if (!clear)
+			(*heigth)++;
+	}
+	for (int col = mLen - 1; col >= 0; col--)
+	{
+		clear = true;
+		for (int row = mLen - 1; row >= 0; row--)
+		{
+			if (Matrix[col][row] > 0)
+			{
+				clear = false;
+				*xFirst = col;
+			}
+		}
+		if (!clear)
+			(*length)++;
+	}
+}
+
+void setMM(double** Matrix, int mLen, double** MatrixModel, int length, int heigth, int xFirst, int yFirst)
+{
+	for (int col = 0; col < length; col++)
+	{
+		for (int row = 0; row < heigth; row++)
+		{
+			MatrixModel[col][row] = Matrix[col + xFirst][row + yFirst];
+		}
+	}
+
+}
+
 int main()
 {
 	setlocale(0, "");
@@ -105,27 +152,27 @@ int main()
 		ShiftDots[i] = new dot[5];
 	dot* Shift = new dot[int(len) + 1];
 
-	//for (int i = 1; i < int(len) + 1; i++)
-		//Shift[i]
-	//cout << crosquare_main({ 0.5, 0.5 }, 45) << endl;
-	/*cout << "mainDot.x: " << mainDot.x << "   " << "mainDot.y: " << mainDot.y << endl
-		<< "angle: = "*/
-	//setShift(Shift, mainDot, angle, int(len) + 1);
-	/*for (int i = 0; i < int(len) + 1; i++)
-	{
-		cout << Shift[i][0].x << ' ' << Shift[i][0].y << endl;
-		cout << Shift[i][1].x << ' ' << Shift[i][1].y << endl;
-		cout << Shift[i][2].x << ' ' << Shift[i][2].y << endl;
-		cout << Shift[i][3].x << ' ' << Shift[i][3].y << endl;
-		cout << Shift[i][4].x << ' ' << Shift[i][4].y << endl << endl;
-	}*/
 	setShift(Shift, mainDot, angle, int(len) + 1);
-	/*for (int i = 0; i < int(len) + 1; i++)
-		cout << Shift[i].x << ' ' << Shift[i].y << endl;*/
 	modelToMatrix(Matrix, Shift, len, angle);
-
+	matrixOutput(matrixLen, matrixLen, Matrix);
 	matrixOutputPHP(matrixLen, Matrix);
 	
+	int MM_length, MM_heigth, MM_xFirst, MM_yFirst;
+	setMMSize(Matrix, matrixLen, &MM_length, &MM_heigth, &MM_xFirst, &MM_yFirst);
+	cout << MM_length << ' ' << MM_heigth << endl;
+	double** MatrixModel = new double* [MM_length];
+	for (int i = 0; i < MM_length; i++)
+		MatrixModel[i] = new double[MM_heigth];
+	setMM(Matrix, matrixLen, MatrixModel, MM_length, MM_heigth, MM_xFirst, MM_yFirst);
+	matrixOutput(MM_length, MM_heigth, MatrixModel);
+
+	delete[] Shift;
+	for (int i = 0; i < MM_length; i++)
+	{
+		MatrixModel[i] = NULL;
+		delete[] MatrixModel[i];
+	}
+	delete[] MatrixModel;
 	for (int i = 0; i < int(len) + 1; i++)
 	{
 		ShiftDots[i] = NULL;
@@ -138,6 +185,5 @@ int main()
 		delete[] Matrix[i];
 	}
 	delete[] Matrix;
-	delete[] Shift;
 	return 0;
 }
