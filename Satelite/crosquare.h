@@ -197,16 +197,16 @@ dot crosquare_rotateDot(dot mainDot, dot D, double angle)
 	return { tD.x * cos(tAngle) + tD.y * sin(tAngle) + mainDot.x, -tD.x * sin(tAngle) + tD.y * cos(tAngle) + mainDot.y };
 }
 
-void crosquare_setSqr(dot* Sqr, dot mainDot, double angle)
+void crosquare_setSqr(dot* Sqr, dot mainDot, double angle, double modelLength)
 {
 	dot* tSqr = new dot[5];
 	tSqr[0] = { mainDot.x - 0.5, mainDot.y - 0.5 };
 	tSqr[0] = crosquare_rotateDot(mainDot, tSqr[0], angle);
 	tSqr[1] = { mainDot.x - 0.5, mainDot.y + 0.5 };
 	tSqr[1] = crosquare_rotateDot(mainDot, tSqr[1], angle);
-	tSqr[2] = { mainDot.x + 0.5, mainDot.y + 0.5 };
+	tSqr[2] = { mainDot.x + 0.5 + modelLength, mainDot.y + 0.5 };
 	tSqr[2] = crosquare_rotateDot(mainDot, tSqr[2], angle);
-	tSqr[3] = { mainDot.x + 0.5, mainDot.y - 0.5 };
+	tSqr[3] = { mainDot.x + 0.5 + modelLength, mainDot.y - 0.5 };
 	tSqr[3] = crosquare_rotateDot(mainDot, tSqr[3], angle);
 	tSqr[4] = tSqr[0];
 	for (int i = 0; i < 5; i++)
@@ -241,26 +241,45 @@ void crosquare_fillPolygon(dot* Sqr0, dot* Sqr1, dot* Polygon)
 		}
 }
 
-double crosquare_zoneZeroAngle(double x, double y)
+double crosquare_zoneZeroAngle(dot mainDot, double len)
 {
-	double dx = x - 0.5, dy = y - 0.5;
-	if (dx >= 1.5 || dy >= 1.5)
+	if (mainDot.y >= 1.5 || mainDot.y <= -0.5 || mainDot.x >= 1.5 || mainDot.x + len <= -0.5)
+	{
+		return 0;
+	}
+	else
+	{
+		double S = 1;
+		S *= (1 - abs(mainDot.y - 0.5));
+		if (mainDot.x > 0.5)
+		{
+			S *= (1.5 - mainDot.x);
+		}
+		if (mainDot.x + len < 0.5)
+		{
+			S *= (0.5 + mainDot.x + len);
+		}
+		return S;
+	}
+
+
+	/*double dx = x - 0.5, dy = y - 0.5;
+	if (abs(dx) >= 1 || abs(dy) >= 1)
 		return 0;
 	else
-		return (1 - abs(dx)) * (1 - abs(dy));
+		return (1 - abs(dx)) * (1 - abs(dy));*/
 }
 
-double crosquare_main(dot mainDot, double angle)
+double crosquare_main(dot mainDot, double angle, double modelLength)
 {
 	setlocale(0, "");
 	dot Sqr0[5] = { {0, 0}, {0, 1}, {1, 1}, {1, 0}, {0, 0} }, Sqr1[5];
-//	if (angle >= 0 && angle < 90)
-//	{
+
 		if (angle == 0)
-			return crosquare_zoneZeroAngle(mainDot.x, mainDot.y);
+			return crosquare_zoneZeroAngle(mainDot, modelLength);
 		else
 		{
-			crosquare_setSqr(Sqr1, mainDot, angle);
+			crosquare_setSqr(Sqr1, mainDot, angle, modelLength);
 			int tops = crosquare_quantityOfTops(Sqr0, Sqr1);
 			if (tops == 0)
 			{
@@ -276,9 +295,7 @@ double crosquare_main(dot mainDot, double angle)
 				return toRet;
 			}
 		}
-//	}
-//	else
-//		cout << "\nНекооректные значения угла\n";
+
 	return 0;
 }
 

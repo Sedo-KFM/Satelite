@@ -7,14 +7,7 @@
 #include "fstream"
 
 using namespace std;
-
-struct matrix
-{
-	double** x;
-	int length;
-	int heigth;
-};
-
+/*
 void matrixOutput(int x, int y, double** A)
 {
 	for (int i = y - 1; i >= 0; i--)
@@ -134,8 +127,10 @@ void setMM(double** Matrix, int mLen, double** MatrixModel, int length, int heig
 	}
 
 }
+*/
 
-double** main()
+//double** main()
+void main()
 {
 	setlocale(0, "");
 	int matrixLen;
@@ -152,8 +147,7 @@ double** main()
 		for (int j = 0; j < matrixLen; j++)
 			Matrix[i][j] = 0;
 	dot mainDot = { matrixLen / 2, matrixLen / 2 };
-	//Matrix[MatrixLen / 2][MatrixLen / 2] = 1;
-	//matrixOutput(MatrixLen, Matrix);
+//	matrixOutput(MatrixLen, Matrix);
 	dot** ShiftDots = new dot * [int(len) + 1];
 	for (int i = 0; i < int(len) + 1; i++)
 		ShiftDots[i] = new dot[5];
@@ -161,25 +155,24 @@ double** main()
 
 	setShift(Shift, mainDot, angle, int(len) + 1);
 	modelToMatrix(Matrix, Shift, len, angle);
-	matrixOutput(matrixLen, matrixLen, Matrix);
-	matrixOutputPHP(matrixLen, Matrix);
+//	matrixOutput(matrixLen, matrixLen, Matrix);
+//	matrixOutputPHP(matrixLen, Matrix);
 	
 	int MM_length, MM_heigth, MM_xFirst, MM_yFirst;
 	setMMSize(Matrix, matrixLen, &MM_length, &MM_heigth, &MM_xFirst, &MM_yFirst);
-	cout << MM_length << ' ' << MM_heigth << endl;
 	double** MatrixModel = new double* [MM_length];
 	for (int i = 0; i < MM_length; i++)
 		MatrixModel[i] = new double[MM_heigth];
 	setMM(Matrix, matrixLen, MatrixModel, MM_length, MM_heigth, MM_xFirst, MM_yFirst);
-	matrixOutput(MM_length, MM_heigth, MatrixModel);
+//	matrixOutput(MM_length, MM_heigth, MatrixModel);
 
 	delete[] Shift;
-	/*for (int i = 0; i < MM_length; i++)
-	{
-		MatrixModel[i] = NULL;
-		delete[] MatrixModel[i];
-	}
-	delete[] MatrixModel;*/
+//	for (int i = 0; i < MM_length; i++)
+//	{
+//		MatrixModel[i] = NULL;
+//		delete[] MatrixModel[i];
+//	}
+//	delete[] MatrixModel;
 	for (int i = 0; i < int(len) + 1; i++)
 	{
 		ShiftDots[i] = NULL;
@@ -192,5 +185,13 @@ double** main()
 		delete[] Matrix[i];
 	}
 	delete[] Matrix;
+
 	return MatrixModel;
+	/*dot d;
+	d.x = -2;
+	d.y = 1;
+	double angle = 0;
+	double len = 8;
+	cout << crosquare_main(d, angle, len) << endl << endl;
+	cout << crosquare_zoneZeroAngle(d, len) << endl << endl;*/
 }
