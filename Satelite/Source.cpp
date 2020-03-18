@@ -49,6 +49,7 @@ void matrixOutputPHP(int N, double** A)
 	phpOut.close();
 }
 
+/*
 void setShiftDots(dot** Shift, dot mainDot, double angle, int len)
 {
 	for (int i = 0; i < len; i++)
@@ -68,17 +69,25 @@ void setShift(dot* Shift, dot mainDot, double angle, int len)
 		mainDot.y -= sin(angle * M_PI / 180);
 	}
 }
+*/
 
-void modelToMatrix(double** Matrix, dot* Shift, double len, double angle )
+void modelToMatrix(double** Matrix, int matrixLen, dot mainDot, double modelLen, double angle )
 {
-	int matrixLen = int(len) + 1;
+/*	int matrixLen = int(len) + 1;
 	for (int i = 0; i < matrixLen; i++)
 		for (int y = int(Shift[i].y + 0.5) - 1; y <= int(Shift[i].y + 0.5) + 1; y++)
 			for (int x = int(Shift[i].x + 0.5) - 1; x <= int(Shift[i].x + 0.5) + 1; x++)
 			{
 				double sqr = crosquare_main({ Shift[i].x + 0.5 - x, Shift[i].y + 0.5 - y }, angle);
 				Matrix[x][y] += sqr / (len + 1);
-			}
+			}*/
+	for (int y = 0; y < matrixLen; y++)
+	{
+		for (int x = 0; x < matrixLen; x++)
+		{
+			Matrix[x][y] = crosquare_main({mainDot.x + 0.5 - x, mainDot.y + 0.5 - y}, angle, modelLen) / (modelLen + 1);
+		}
+	}
 }
 
 void setMMSize(double** Matrix, int mLen, int* length, int* heigth, int* xFirst, int* yFirst)
@@ -146,16 +155,15 @@ double** main()
 		for (int j = 0; j < matrixLen; j++)
 			Matrix[i][j] = 0;
 	dot mainDot = { matrixLen / 2, matrixLen / 2 };
-//	matrixOutput(MatrixLen, Matrix);
-	dot** ShiftDots = new dot * [int(len) + 1];
-	for (int i = 0; i < int(len) + 1; i++)
-		ShiftDots[i] = new dot[5];
-	dot* Shift = new dot[int(len) + 1];
+//	dot** ShiftDots = new dot * [int(len) + 1];
+//	for (int i = 0; i < int(len) + 1; i++)
+//		ShiftDots[i] = new dot[5];
+//	dot* Shift = new dot[int(len) + 1];
 
-	setShift(Shift, mainDot, angle, int(len) + 1);
-	modelToMatrix(Matrix, Shift, len, angle);
+//	setShift(Shift, mainDot, angle, int(len) + 1);
+	modelToMatrix(Matrix, matrixLen, mainDot, len, angle);
 //	matrixOutput(matrixLen, matrixLen, Matrix);
-//	matrixOutputPHP(matrixLen, Matrix);
+	matrixOutputPHP(matrixLen, Matrix);
 	
 	int MM_length, MM_heigth, MM_xFirst, MM_yFirst;
 	setMMSize(Matrix, matrixLen, &MM_length, &MM_heigth, &MM_xFirst, &MM_yFirst);
@@ -165,19 +173,19 @@ double** main()
 	setMM(Matrix, matrixLen, MatrixModel, MM_length, MM_heigth, MM_xFirst, MM_yFirst);
 //	matrixOutput(MM_length, MM_heigth, MatrixModel);
 
-	delete[] Shift;
+	//delete[] Shift;
 //	for (int i = 0; i < MM_length; i++)
 //	{
 //		MatrixModel[i] = NULL;
 //		delete[] MatrixModel[i];
 //	}
 //	delete[] MatrixModel;
-	for (int i = 0; i < int(len) + 1; i++)
+	/*for (int i = 0; i < int(len) + 1; i++)
 	{
 		ShiftDots[i] = NULL;
 		delete[] ShiftDots[i];
 	}
-	delete[] ShiftDots;
+	delete[] ShiftDots;*/
 	for (int i = 0; i < matrixLen; i++)
 	{
 		Matrix[i] = NULL;
