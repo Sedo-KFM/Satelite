@@ -19,7 +19,7 @@ void matrixOutput(int x, int y, double** A)
 	cout << endl;
 }
 
-void matrixOutputPHP(int N, double** A)
+void matrixOutputPHP(int x, int y, double** A)
 {
 	ofstream phpOut;
 	phpOut.open("C:\\Users\\Fedor\\Desktop\\visual.html");
@@ -30,22 +30,24 @@ void matrixOutputPHP(int N, double** A)
 		<< "	<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
 		<< "	<title>Document</title>\n"
 		<< "</head>\n"
-		<< "<body>\n"
-		<< "	<table border=\"0\">\n";
-	for (int i = N - 1; i >= 0; i--)
+		<< "	<body style=\"height: 100vh; width: 100vw; margin : 0; display: flex; justify-content: center; align-items: center; \">\n"
+		<< "		<div style=\"display: flex; border: 1px solid black; \">\n"
+		<< "			<table border=\"0\">\n";
+	for (int i = y - 1; i >= 0; i--)
 	{
-		phpOut << "		<tr>\n";
-		for (int j = 0; j < N; j++)
+		phpOut << "				<tr>\n";
+		for (int j = 0; j < x; j++)
 		{
-			phpOut << "			<td style=\"background-color: rgb(" << 255 - 255 * A[j][i] << ", " << 255 - 255 * A[j][i] << ", " << 255 - 255 * A[j][i] << "); \">\n"
-				<< "				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n"
-				<< "			</td>";
+			phpOut << "					<td style=\"background-color: rgb(" << 255 - 255 * A[j][i] << ", " << 255 - 255 * A[j][i] << ", " << 255 - 255 * A[j][i] << "); \">\n"
+				<< "						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n"
+				<< "					</td>\n";
 		}
-		phpOut << "		</tr>";
+		phpOut << "				</tr>\n";
 	}
-	phpOut << "	</table>\n"
-		<< "</body>\n"
-		<< "<html>";
+	phpOut << "			</table>\n"
+		<< "		</div>\n"
+		<< "	</body>\n"
+		<< "</html>";
 	phpOut.close();
 }
 
@@ -163,7 +165,6 @@ double** main()
 //	setShift(Shift, mainDot, angle, int(len) + 1);
 	modelToMatrix(Matrix, matrixLen, mainDot, len, angle);
 //	matrixOutput(matrixLen, matrixLen, Matrix);
-	matrixOutputPHP(matrixLen, Matrix);
 	
 	int MM_length, MM_heigth, MM_xFirst, MM_yFirst;
 	setMMSize(Matrix, matrixLen, &MM_length, &MM_heigth, &MM_xFirst, &MM_yFirst);
@@ -171,6 +172,7 @@ double** main()
 	for (int i = 0; i < MM_length; i++)
 		MatrixModel[i] = new double[MM_heigth];
 	setMM(Matrix, matrixLen, MatrixModel, MM_length, MM_heigth, MM_xFirst, MM_yFirst);
+	matrixOutputPHP(MM_length, MM_heigth, MatrixModel);
 //	matrixOutput(MM_length, MM_heigth, MatrixModel);
 
 	//delete[] Shift;
