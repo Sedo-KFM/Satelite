@@ -8,6 +8,13 @@
 
 using namespace std;
 
+struct matrix
+{
+	double** x;
+	int length;
+	int heigth;
+};
+
 void matrixOutput(int x, int y, double** A)
 {
 	for (int i = y - 1; i >= 0; i--)
@@ -128,7 +135,7 @@ void setMM(double** Matrix, int mLen, double** MatrixModel, int length, int heig
 
 }
 
-int main()
+double** main()
 {
 	setlocale(0, "");
 	int matrixLen;
@@ -167,12 +174,12 @@ int main()
 	matrixOutput(MM_length, MM_heigth, MatrixModel);
 
 	delete[] Shift;
-	for (int i = 0; i < MM_length; i++)
+	/*for (int i = 0; i < MM_length; i++)
 	{
 		MatrixModel[i] = NULL;
 		delete[] MatrixModel[i];
 	}
-	delete[] MatrixModel;
+	delete[] MatrixModel;*/
 	for (int i = 0; i < int(len) + 1; i++)
 	{
 		ShiftDots[i] = NULL;
@@ -185,5 +192,5 @@ int main()
 		delete[] Matrix[i];
 	}
 	delete[] Matrix;
-	return 0;
+	return MatrixModel;
 }
