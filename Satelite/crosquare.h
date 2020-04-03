@@ -2,9 +2,7 @@
 #define CROSQUARE_H
 
 #define _USE_MATH_DEFINES
-#include "iostream"
 #include "cmath"
-#include "clocale"
 
 using namespace std;
 
@@ -294,7 +292,6 @@ double crosquare_zoneZeroAngle(dot mainDot, double len)
 //  возвращает площадь пересеения нулевого квадрата и прямоугольника
 double crosquare_main(dot mainDot, double angle, double modelLength)
 {
-	setlocale(0, "");
 	dot Sqr0[5] = { {0, 0}, {0, 1}, {1, 1}, {1, 0}, {0, 0} }, Sqr1[5];
 
 		if (angle == 0)

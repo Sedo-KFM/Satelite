@@ -59,28 +59,6 @@ void matrixOutputPHP(int x, int y, double** A)
 	phpOut.close();
 }
 
-/*
-void setShiftDots(dot** Shift, dot mainDot, double angle, int len)
-{
-	for (int i = 0; i < len; i++)
-	{
-		crosquare_setSqr(Shift[i], mainDot, angle);
-		mainDot.x += cos(angle * M_PI / 180);
-		mainDot.y -= sin(angle * M_PI / 180);
-	}
-}
-
-void setShift(dot* Shift, dot mainDot, double angle, int len)
-{
-	for (int i = 0; i < len; i++)
-	{
-		Shift[i] = mainDot;
-		mainDot.x += cos(angle * M_PI / 180);
-		mainDot.y -= sin(angle * M_PI / 180);
-	}
-}
-*/
-
 //  проецирует в Matrix модель смаза
 void modelToMatrix(double** Matrix, int matrixLen, dot mainDot, double modelLen, double angle )
 {
@@ -150,7 +128,8 @@ void setMM(double** Matrix, int mLen, double** MatrixModel, int length, int heig
 
 }
 
-shiftModel main()
+//  shiftModel main()
+int main()
 {
 	setlocale(0, "");
 	int matrixLen;
@@ -176,7 +155,10 @@ shiftModel main()
 	modelToMatrix(Matrix, matrixLen, mainDot, len, angle);
 	int MM_length, MM_heigth, MM_xFirst, MM_yFirst;
 	setMMSize(Matrix, matrixLen, &MM_length, &MM_heigth, &MM_xFirst, &MM_yFirst);
+	mainDot.x -= MM_xFirst;
+	mainDot.y -= MM_yFirst;
 	shiftModel shift;
+	shift.mainDot = mainDot;
 	shift.matrix = new double* [MM_length];
 	for (int i = 0; i < MM_length; i++)
 	{
@@ -191,6 +173,7 @@ shiftModel main()
 		delete[] Matrix[i];
 	}
 	delete[] Matrix;
-
-	return shift;
+	cout << endl << shift.mainDot.x << ' ' << shift.mainDot.y << endl;
+	//return shift;
+	return 0;
 }
