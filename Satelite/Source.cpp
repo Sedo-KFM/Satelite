@@ -8,6 +8,13 @@
 
 using namespace std;
 
+struct shiftModel
+{
+	double** matrix;
+	dot mainDot;
+};
+
+//  выводит на экран матрицу
 void matrixOutput(int x, int y, double** A)
 {
 	for (int i = y - 1; i >= 0; i--)
@@ -19,6 +26,7 @@ void matrixOutput(int x, int y, double** A)
 	cout << endl;
 }
 
+//  выводит в php матрицу
 void matrixOutputPHP(int x, int y, double** A)
 {
 	ofstream phpOut;
@@ -73,6 +81,7 @@ void setShift(dot* Shift, dot mainDot, double angle, int len)
 }
 */
 
+//  проецирует в Matrix модель смаза
 void modelToMatrix(double** Matrix, int matrixLen, dot mainDot, double modelLen, double angle )
 {
 /*	int matrixLen = int(len) + 1;
@@ -92,6 +101,7 @@ void modelToMatrix(double** Matrix, int matrixLen, dot mainDot, double modelLen,
 	}
 }
 
+//  возвращает высоту и длину модели + координаты первого пикселя
 void setMMSize(double** Matrix, int mLen, int* length, int* heigth, int* xFirst, int* yFirst)
 {
 	bool clear;
@@ -127,6 +137,7 @@ void setMMSize(double** Matrix, int mLen, int* length, int* heigth, int* xFirst,
 	}
 }
 
+//  обрезает Matrix до MatrixModel
 void setMM(double** Matrix, int mLen, double** MatrixModel, int length, int heigth, int xFirst, int yFirst)
 {
 	for (int col = 0; col < length; col++)
@@ -139,8 +150,7 @@ void setMM(double** Matrix, int mLen, double** MatrixModel, int length, int heig
 
 }
 
-//void main()
-double** main()
+shiftModel main()
 {
 	setlocale(0, "");
 	int matrixLen;
@@ -166,13 +176,14 @@ double** main()
 	modelToMatrix(Matrix, matrixLen, mainDot, len, angle);
 	int MM_length, MM_heigth, MM_xFirst, MM_yFirst;
 	setMMSize(Matrix, matrixLen, &MM_length, &MM_heigth, &MM_xFirst, &MM_yFirst);
-	double** MatrixModel = new double* [MM_length];
+	shiftModel shift;
+	shift.matrix = new double* [MM_length];
 	for (int i = 0; i < MM_length; i++)
 	{
-		MatrixModel[i] = new double[MM_heigth];
+		shift.matrix[i] = new double[MM_heigth];
 	}
-	setMM(Matrix, matrixLen, MatrixModel, MM_length, MM_heigth, MM_xFirst, MM_yFirst);
-	matrixOutputPHP(MM_length, MM_heigth, MatrixModel);
+	setMM(Matrix, matrixLen, shift.matrix, MM_length, MM_heigth, MM_xFirst, MM_yFirst);
+	matrixOutputPHP(MM_length, MM_heigth, shift.matrix);
 
 	for (int i = 0; i < matrixLen; i++)
 	{
@@ -181,5 +192,5 @@ double** main()
 	}
 	delete[] Matrix;
 
-	return MatrixModel;
+	return shift;
 }

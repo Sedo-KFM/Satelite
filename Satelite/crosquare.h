@@ -8,24 +8,28 @@
 
 using namespace std;
 
+//	точка
 struct dot
 {
 	double x;
 	double y;
 };
 
+//  отрезок
 struct section
 {
 	struct dot A;
 	struct dot B;
 };
 
+//  прямая
 struct line
 {
 	double k;
 	double b;
 };
 
+//  возвращает прямую из отрезка
 line crosquare_lineFromSection(section S)
 {
 	double k;
@@ -33,16 +37,19 @@ line crosquare_lineFromSection(section S)
 	return { k, S.A.y - k * S.A.x };
 }
 
+//  возвращает координату Y точки на прямой от её координаты X
 double crosquare_lineFunction(line f, double x)
 {
 	return f.k * x + f.b;
 }
 
+//  возвращает координату X точки на прямой от её координаты Y
 double crosquare_lineFunctionReverse(line f, double y)
 {
 	return (y - f.b) / f.k;
 }
 
+//  возвращает площадь выпуклого многоугольника
 double crosquare_zone(dot D[], int q)
 {
 	double sum = 0;
@@ -51,6 +58,7 @@ double crosquare_zone(dot D[], int q)
 	return sum * 0.5;
 }
 
+//  возвращает расстояние между двумя точками
 double crosquare_dist(dot A, dot B)
 {
 	double l = abs(B.x - A.x);
@@ -58,6 +66,7 @@ double crosquare_dist(dot A, dot B)
 	return pow(pow(l, 2) + pow(h, 2), 0.5);
 }
 
+//  возвращает true если точки равны, иначе false
 bool crosquare_equalDot(dot A, dot B)
 {
 	if (A.x == B.x && A.y == B.y)
@@ -66,6 +75,7 @@ bool crosquare_equalDot(dot A, dot B)
 		return false;
 }
 
+//  возвращает точку пересечения двух отрезков
 dot crosquare_cross(section a, section b)
 {
 	return
@@ -77,6 +87,7 @@ dot crosquare_cross(section a, section b)
 	};
 }
 
+//  возвращает true если отрезки пересекаются, иначе false
 bool crosquare_isCross(section s0, section s1)
 {
 	line l1 = crosquare_lineFromSection(s1);
@@ -99,6 +110,7 @@ bool crosquare_isCross(section s0, section s1)
 		return false;
 }
 
+//  возвращает true если точка находится внутри четырёхугольника, иначе false
 bool crosquare_isIn(dot* Sqr, dot D)
 {
 	if (Sqr[0].x == 0 && Sqr[0].y == 0 && Sqr[2].x == 1 && Sqr[2].y == 1)
@@ -114,6 +126,7 @@ bool crosquare_isIn(dot* Sqr, dot D)
 	return false;
 }
 
+//  возвращает количество вершин многоугольника полученного из пересечения двух четырёхугольников
 int crosquare_quantityOfTops(dot* Sqr0, dot* Sqr1)
 {
 	int quant = 0;
@@ -133,6 +146,7 @@ int crosquare_quantityOfTops(dot* Sqr0, dot* Sqr1)
 	return quant;
 }
 
+//  возвращает true если точка есть в массиве, инвче false
 bool crosquare_dotInArr(int len, dot A[], dot D)
 {
 	for (int i = 0; i < len; i++)
@@ -141,6 +155,7 @@ bool crosquare_dotInArr(int len, dot A[], dot D)
 	return false;
 }
 
+//  возвращает угол между отрезками
 double crosquare_angleOfSections(section a, section b)
 {
 	dot A = { a.B.x - a.A.x, a.B.y - a.A.y };
@@ -148,6 +163,7 @@ double crosquare_angleOfSections(section a, section b)
 	return 180 / M_PI * acos((A.x * B.x + A.y * B.y) / (pow(pow(A.x, 2) + pow(A.y, 2), 0.5) * pow(pow(B.x, 2) + pow(B.y, 2), 0.5)));
 }
 
+//  возвращает  угол между точками
 double crosquare_angleDots(dot A, dot B)
 {
 	double t = atan2(A.y - B.y, A.x - B.x) * 180 / M_PI;
@@ -162,6 +178,7 @@ double crosquare_angleDots(dot A, dot B)
 	}
 }
 
+//  упорядочивает точки в массиве D
 void crosquare_lastConvexer(int len, dot* D)
 {
 	dot* D_t = new dot[len];
@@ -190,6 +207,7 @@ void crosquare_lastConvexer(int len, dot* D)
 	delete[] D_t;
 }
 
+//  возвращает повёрнутую точку D вокруг mainDot на угол angle
 dot crosquare_rotateDot(dot mainDot, dot D, double angle)
 {
 	dot tD = { { D.x - mainDot.x }, { D.y - mainDot.y } };
@@ -197,6 +215,7 @@ dot crosquare_rotateDot(dot mainDot, dot D, double angle)
 	return { tD.x * cos(tAngle) + tD.y * sin(tAngle) + mainDot.x, -tD.x * sin(tAngle) + tD.y * cos(tAngle) + mainDot.y };
 }
 
+//  создаёт в массиве Sqr квадрат из центральной точки mainDot и угла поворота angle
 void crosquare_setSqr(dot* Sqr, dot mainDot, double angle, double modelLength)
 {
 	dot* tSqr = new dot[5];
@@ -214,6 +233,7 @@ void crosquare_setSqr(dot* Sqr, dot mainDot, double angle, double modelLength)
 	delete[] tSqr;
 }
 
+//  заполняет массив Polygon точками пересечения прямойгольников Sqr0 и Sqr1
 void crosquare_fillPolygon(dot* Sqr0, dot* Sqr1, dot* Polygon)
 {
 	int n = 0;
@@ -241,6 +261,7 @@ void crosquare_fillPolygon(dot* Sqr0, dot* Sqr1, dot* Polygon)
 		}
 }
 
+//  возвращает площадь пересечения прямоугольников (нулевого и заданного центральной точкой и величиной бокового удлиннения len) при нулевом угле
 double crosquare_zoneZeroAngle(dot mainDot, double len)
 {
 	if (mainDot.y >= 1.5 || mainDot.y <= -0.5 || mainDot.x >= 1.5 || mainDot.x + len <= -0.5)
@@ -270,6 +291,7 @@ double crosquare_zoneZeroAngle(dot mainDot, double len)
 		return (1 - abs(dx)) * (1 - abs(dy));*/
 }
 
+//  возвращает площадь пересеения нулевого квадрата и прямоугольника
 double crosquare_main(dot mainDot, double angle, double modelLength)
 {
 	setlocale(0, "");
