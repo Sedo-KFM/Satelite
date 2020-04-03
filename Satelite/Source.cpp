@@ -152,42 +152,28 @@ double** main()
 	matrixLen = int(len * 4 + 1) + 4;
 	double** Matrix = new double* [matrixLen];
 	for (int i = 0; i < matrixLen; i++)
+	{
 		Matrix[i] = new double[matrixLen];
+	}
 	for (int i = 0; i < matrixLen; i++)
+	{
 		for (int j = 0; j < matrixLen; j++)
+		{
 			Matrix[i][j] = 0;
+		}
+	}
 	dot mainDot = { matrixLen / 2, matrixLen / 2 };
-//	dot** ShiftDots = new dot * [int(len) + 1];
-//	for (int i = 0; i < int(len) + 1; i++)
-//		ShiftDots[i] = new dot[5];
-//	dot* Shift = new dot[int(len) + 1];
-
-//	setShift(Shift, mainDot, angle, int(len) + 1);
 	modelToMatrix(Matrix, matrixLen, mainDot, len, angle);
-//	matrixOutput(matrixLen, matrixLen, Matrix);
-	
 	int MM_length, MM_heigth, MM_xFirst, MM_yFirst;
 	setMMSize(Matrix, matrixLen, &MM_length, &MM_heigth, &MM_xFirst, &MM_yFirst);
 	double** MatrixModel = new double* [MM_length];
 	for (int i = 0; i < MM_length; i++)
+	{
 		MatrixModel[i] = new double[MM_heigth];
+	}
 	setMM(Matrix, matrixLen, MatrixModel, MM_length, MM_heigth, MM_xFirst, MM_yFirst);
 	matrixOutputPHP(MM_length, MM_heigth, MatrixModel);
-//	matrixOutput(MM_length, MM_heigth, MatrixModel);
 
-	//delete[] Shift;
-//	for (int i = 0; i < MM_length; i++)
-//	{
-//		MatrixModel[i] = NULL;
-//		delete[] MatrixModel[i];
-//	}
-//	delete[] MatrixModel;
-	/*for (int i = 0; i < int(len) + 1; i++)
-	{
-		ShiftDots[i] = NULL;
-		delete[] ShiftDots[i];
-	}
-	delete[] ShiftDots;*/
 	for (int i = 0; i < matrixLen; i++)
 	{
 		Matrix[i] = NULL;
@@ -196,11 +182,4 @@ double** main()
 	delete[] Matrix;
 
 	return MatrixModel;
-	/*dot d;
-	d.x = -2;
-	d.y = 1;
-	double angle = 0;
-	double len = 8;
-	cout << crosquare_main(d, angle, len) << endl << endl;
-	cout << crosquare_zoneZeroAngle(d, len) << endl << endl;*/
 }
