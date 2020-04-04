@@ -1,3 +1,4 @@
+#pragma once
 #ifndef CROSQUARE_H
 #define CROSQUARE_H
 
@@ -294,26 +295,26 @@ double crosquare_main(dot mainDot, double angle, double modelLength)
 {
 	dot Sqr0[5] = { {0, 0}, {0, 1}, {1, 1}, {1, 0}, {0, 0} }, Sqr1[5];
 
-		if (angle == 0)
-			return crosquare_zoneZeroAngle(mainDot, modelLength);
+	if (angle == 0)
+		return crosquare_zoneZeroAngle(mainDot, modelLength);
+	else
+	{
+		crosquare_setSqr(Sqr1, mainDot, angle, modelLength);
+		int tops = crosquare_quantityOfTops(Sqr0, Sqr1);
+		if (tops == 0)
+		{
+			return 0;
+		}
 		else
 		{
-			crosquare_setSqr(Sqr1, mainDot, angle, modelLength);
-			int tops = crosquare_quantityOfTops(Sqr0, Sqr1);
-			if (tops == 0)
-			{
-				return 0;
-			}
-			else
-			{
-				dot* Polygon = new dot[tops + 1];
-				crosquare_fillPolygon(Sqr0, Sqr1, Polygon);
-				crosquare_lastConvexer(tops, Polygon);
-				double toRet = crosquare_zone(Polygon, tops);
-				delete[] Polygon;
-				return toRet;
-			}
+			dot* Polygon = new dot[tops + 1];
+			crosquare_fillPolygon(Sqr0, Sqr1, Polygon);
+			crosquare_lastConvexer(tops, Polygon);
+			double toRet = crosquare_zone(Polygon, tops);
+			delete[] Polygon;
+			return toRet;
 		}
+	}
 
 	return 0;
 }

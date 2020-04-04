@@ -20,6 +20,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="modellinglowangle.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
     <ClInclude Include="crosquare.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
