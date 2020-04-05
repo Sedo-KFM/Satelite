@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <iostream>
 #include <clocale>
+#include <fstream>
 
 using namespace std;
 
@@ -50,6 +51,7 @@ void matrixOutputPHP(int x, int y, double** A)
 	phpOut.close();
 }
 
+//  поворачивает матрицу и точку на 90 градусов против часовой
 void matrixRotate(shiftModel* shift)
 {
 	int height = shift->height;
@@ -87,7 +89,7 @@ void matrixRotate(shiftModel* shift)
 	}
 
 	int buf = shift->mainDot.y;
-	shift->mainDot.y = width - 1 - shift->mainDot.x;
+	shift->mainDot.y = width - 1. - shift->mainDot.x;
 	shift->mainDot.x = buf;
 
 	double temp = shift->width;
@@ -114,7 +116,7 @@ int main()
 	if (angle >= 90)
 	{
 		rotate = angle / 90;
-		angle = angle - rotate * 90;
+		angle = angle - rotate * 90.;
 	}
 	shiftModel shift;
 	shift = modellinglowangle_main(len, angle);

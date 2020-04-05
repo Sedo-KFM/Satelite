@@ -3,8 +3,6 @@
 
 #define _USE_MATH_DEFINES
 #include "crosquare.h"
-#include "cmath"
-#include "fstream"
 
 using namespace std;
 
