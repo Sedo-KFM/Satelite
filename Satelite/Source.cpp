@@ -111,7 +111,7 @@ int main()
 	cin >> angle;
 	cout << "¬ведите длину смаза\n";
 	cin >> len;
-	if (angle > 90)
+	if (angle >= 90)
 	{
 		rotate = angle / 90;
 		angle = angle - rotate * 90;
