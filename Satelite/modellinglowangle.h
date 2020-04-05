@@ -1,10 +1,7 @@
 #ifndef MODELLINGLOWANGLE
 #define MODELLINGLOWANGLE
 
-#define _USE_MATH_DEFINES
 #include "crosquare.h"
-
-using namespace std;
 
 struct shiftModel
 {
@@ -87,7 +84,7 @@ void modellinglowangle_setMM(double** Matrix, int mLen, double** MatrixModel, in
 shiftModel modellinglowangle_main(double len, double angle)
 {
 	int matrixLen;
-	
+
 	matrixLen = int(len * 4 + 1) + 4;
 	double** Matrix = new double* [matrixLen];
 	for (int i = 0; i < matrixLen; i++)
@@ -117,17 +114,12 @@ shiftModel modellinglowangle_main(double len, double angle)
 		shift.matrix[i] = new double[MM_height];
 	}
 	modellinglowangle_setMM(Matrix, matrixLen, shift.matrix, MM_width, MM_height, MM_xFirst, MM_yFirst);
-//	matrixOutputPHP(MM_width, MM_height, shift.matrix);
-
 	for (int i = 0; i < matrixLen; i++)
 	{
 		Matrix[i] = NULL;
 		delete[] Matrix[i];
 	}
 	delete[] Matrix;
-//	cout << endl << shift.mainDot.x << ' ' << shift.mainDot.y << endl;
-	//return shift;
-
 	return shift;
 }
 

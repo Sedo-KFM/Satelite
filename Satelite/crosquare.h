@@ -2,7 +2,6 @@
 #ifndef CROSQUARE_H
 #define CROSQUARE_H
 
-#define _USE_MATH_DEFINES
 #include "cmath"
 
 using namespace std;
