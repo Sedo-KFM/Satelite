@@ -144,7 +144,7 @@ int crosquare_quantityOfTops(dot* Sqr0, dot* Sqr1)
 	return quant;
 }
 
-//  возвращает true если точка есть в массиве, инвче false
+//  возвращает true если точка есть в массиве, иначе false
 bool crosquare_dotInArr(int len, dot A[], dot D)
 {
 	for (int i = 0; i < len; i++)
@@ -213,7 +213,7 @@ dot crosquare_rotateDot(dot mainDot, dot D, double angle)
 	return { tD.x * cos(tAngle) + tD.y * sin(tAngle) + mainDot.x, -tD.x * sin(tAngle) + tD.y * cos(tAngle) + mainDot.y };
 }
 
-//  создаёт в массиве Sqr квадрат из центральной точки mainDot и угла поворота angle
+//  создаёт в массиве Sqr прямоугольник из центральной точки mainDot и угла поворота angle
 void crosquare_setSqr(dot* Sqr, dot mainDot, double angle, double modelLength)
 {
 	dot* tSqr = new dot[5];
