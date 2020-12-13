@@ -57,12 +57,12 @@ double crosquare_zone(dot D[], int q)
 }
 
 //  возвращает расстояние между двумя точками
-double crosquare_dist(dot A, dot B)
+/*double crosquare_dist(dot A, dot B)
 {
 	double l = abs(B.x - A.x);
 	double h = abs(B.y - A.y);
 	return pow(pow(l, 2) + pow(h, 2), 0.5);
-}
+}*/
 
 //  возвращает true если точки равны, иначе false
 bool crosquare_equalDot(dot A, dot B)
@@ -161,7 +161,7 @@ double crosquare_angleOfSections(section a, section b)
 	return 180 / M_PI * acos((A.x * B.x + A.y * B.y) / (pow(pow(A.x, 2) + pow(A.y, 2), 0.5) * pow(pow(B.x, 2) + pow(B.y, 2), 0.5)));
 }
 
-//  возвращает  угол между точками
+//  возвращает угол между точками
 double crosquare_angleDots(dot A, dot B)
 {
 	double t = atan2(A.y - B.y, A.x - B.x) * 180 / M_PI;
