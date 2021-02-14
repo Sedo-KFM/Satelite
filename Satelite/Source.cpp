@@ -62,7 +62,7 @@ int main()
 	shiftModel shift;
 	shift = modellingfullangle_main(len, angle);
 
-	matrixOutputHTML(shift.width, shift.height, shift.matrix);
+	//matrixOutputHTML(shift.width, shift.height, shift.matrix);
 
 	for (int i = 0; i < shift.width; i++)
 	{

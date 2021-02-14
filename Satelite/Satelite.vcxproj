@@ -25,6 +25,7 @@
     <ClInclude Include="crosquare.h" />
     <ClInclude Include="modellingfullangle.h" />
     <ClInclude Include="modellinglowangle.h" />
+    <ClInclude Include="pnmhandler.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
