@@ -123,29 +123,3 @@ void write_img(const std::string filename, const Pnm& img_out)
 	}
 	ofs.close();
 }
-
-int pnmhandler_main()
-{
-	// reading in img_in
-	Pnm img_in = read_img("C:\\Temp\\img_in.pnm");
-
-	// setting img_out
-	Pnm img_out(img_in.size.x, img_in.size.y);
-
-	// copying img_in -> img_out
-	img_out = img_in;
-
-	// work with img_out
-	for (int y = 0; y < img_in.size.y; y++)
-	{
-		for (unsigned int x = 0; x < img_in.size.x; x++)
-		{
-			img_out.image[y][x] = 255 - img_out.image[y][x];
-		}
-	}
-
-	// writing from img_out
-	write_img("C:\\Temp\\img_out.pnm", img_out);
-
-	return 0;
-}
