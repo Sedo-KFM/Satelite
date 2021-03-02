@@ -63,15 +63,17 @@ Pnm applyShift(Pnm pnm_in, ShiftModel shift)
 		for (unsigned int img_x = 0; img_x < pnm_in.size.x; img_x++)
 		{
 			pnm_out.image[img_y][img_x] = 0;
+			double brightness_sum = 0;
 			for (unsigned int shift_y = 0; shift_y < shift.width && img_y + shift_y - shift.mainDot.y < pnm_in.size.y; shift_y++)
 			{
-				if (shift_y - shift.mainDot.y >= 0)
+				if (img_y - shift.mainDot.y >= 0)
 				{
 					for (unsigned int shift_x = 0; shift_x < shift.height && img_x + shift_x - shift.mainDot.x < pnm_in.size.x; shift_x++)
 					{
-						if (shift_x - shift.mainDot.x >= 0)
+						if (img_x - shift.mainDot.x >= 0)
 						{
 							pnm_out.image[img_y][img_x] += pnm_in.image[img_y + shift_y - shift.mainDot.y][img_x + shift_x - shift.mainDot.x] * shift.matrix[shift_y][shift_x];
+							brightness_sum += shift.matrix[shift_y][shift_x];
 						}
 					}
 				}
@@ -101,7 +103,7 @@ int main()
 	// writing from pnm_out
 	write_img("C:\\Temp\\img_out_1.pnm", pnm_out);
 
-	//matrixOutputHTML(shift.width, shift.height, shift.matrix);
+	//matrixOutput(shift.width, shift.height, shift.matrix);
 
 	for (int i = 0; i < shift.width; i++)
 	{
