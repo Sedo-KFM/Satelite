@@ -5,7 +5,7 @@
 
 
 //  поворачивает матрицу и точку на 90 градусов против часовой
-void modellingfullangle_matrixRotate(shiftModel* shift)
+void modellingfullangle_matrixRotate(ShiftModel* shift)
 {
 	int height = shift->height;
 	int width = shift->width;
@@ -58,7 +58,7 @@ void modellingfullangle_matrixRotate(shiftModel* shift)
 }
 
 //  возвращает проекцию созданной модели смаза
-shiftModel modellingfullangle_main(double len, double angle)
+ShiftModel modellingfullangle_main(double len, double angle)
 {
 	int rotate = 0;
 	if (angle >= 90)
@@ -66,7 +66,7 @@ shiftModel modellingfullangle_main(double len, double angle)
 		rotate = angle / 90;
 		angle = angle - rotate * 90.;
 	}
-	shiftModel shift;
+	ShiftModel shift;
 	shift = modellinglowangle_main(len, angle);
 	if (rotate > 0)
 	{

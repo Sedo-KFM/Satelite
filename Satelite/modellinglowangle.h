@@ -3,9 +3,9 @@
 
 #include "crosquare.h"
 
-struct shiftModel
+struct ShiftModel
 {
-	double** matrix;
+	double** matrix = nullptr;
 	double width;
 	double height;
 	dot mainDot;
@@ -81,7 +81,7 @@ void modellinglowangle_setMM(double** Matrix, int mLen, double** MatrixModel, in
 }
 
 //  возвращает проекцию созданной модели смаза (angle < 90)
-shiftModel modellinglowangle_main(double len, double angle)
+ShiftModel modellinglowangle_main(double len, double angle)
 {
 	int matrixLen;
 
@@ -104,7 +104,7 @@ shiftModel modellinglowangle_main(double len, double angle)
 	modellinglowangle_setMMSize(Matrix, matrixLen, &MM_width, &MM_height, &MM_xFirst, &MM_yFirst);
 	mainDot.x -= MM_xFirst;
 	mainDot.y -= MM_yFirst;
-	shiftModel shift;
+	ShiftModel shift;
 	shift.width = MM_width;
 	shift.height = MM_height;
 	shift.mainDot = mainDot;
